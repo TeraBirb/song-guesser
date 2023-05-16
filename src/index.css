@@ -7,6 +7,24 @@
   background: #2e4057;
 }
 
+.navbar {
+  margin-top: 10px;
+}
+
+.navbar .links {
+  margin-left: auto;
+}
+
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}
+
+.navbar a:hover {
+  color: #da4167;
+}
+
 .content {
   max-width: 600px;
   margin: 40px auto;
