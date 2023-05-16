@@ -1,7 +1,10 @@
 const Game = () => {
     return ( 
         <div className="game">
-            <h1>The game</h1>
+            <h1>Song Guesser!</h1>
+            <div className="window">
+                
+            </div>
         </div>
      );
 }
