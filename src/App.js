@@ -1,15 +1,19 @@
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Home';
 
 function App() {
   return (
-    <div className="App">
-      <div className="content">
-        <h1>Song Guesser</h1>
-        <h3>A web app by Isaiah Callano for CIS 27</h3>
-        <p className="intro">A song snippet will play for 5 seconds and you have to guess the song title and artist!</p>
-        <button className="play">Play Game</button>
+    <Router>
+      <div className="App">
+        <div className="content">
+          <Routes>
+            <Route path = "/" element = {<Home/>}/>
+            <Route path = "/game" element = {<Game/>}/>
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
