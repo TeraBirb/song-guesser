@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+
+// data from Spotify Developer
 const CLIENT_ID = '8cb420509fdf40219cdbdbc9ea852644';
 const REDIRECT_URI = 'http://localhost:3000/callback';
-const SCOPES = 'user-read-private user-read-email'; // Add desired scopes
+const SCOPES = 'user-read-private user-read-email';
 
 const getTokenFromResponse = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -29,12 +31,6 @@ const requestAccessToken = async (code) => {
 };
 
 const Game = () => {
-
-    // const CLIENT_ID = "8cb420509fdf40219cdbdbc9ea852644";
-    // const CLIENT_SECRET = "5d0e3ffd63104079909e2b17813ea88e";
-    // const REDIRECT_URI = "http://localhost:3000";
-    // const AUTH_ENDPOINT = "https://account.spotify.com/authorize";
-    // const RESPONSE_TYPE = "token";
     
     useEffect(() => {
         const code = getTokenFromResponse();
