@@ -5,6 +5,7 @@ const Home = () => {
 
     const [isPending, setIsPending] = useState(false);
 
+    // possible animation, fake (or real) loading time, 
     const handleClick = () => {
         // setIsPending(true);
 
