@@ -7,6 +7,11 @@
   background: #2e4057;
 }
 
+.App {
+  text-align: center;
+}
+
+
 .navbar {
   margin-top: 10px;
 }
@@ -35,7 +40,7 @@
   margin: 20px;
 }
 
-.home button {
+.home button, .game button {
   background: #da4167;
   color: #fff;
   margin-top: 20px;
@@ -48,7 +53,7 @@
   cursor: pointer;
 }
 
-.home button:active {
+.home button:active, .game button:active {
   border: 3px solid #8c2942;
   padding: 7px;
 }

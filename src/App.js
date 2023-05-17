@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Game from './Game';
 import About from './About';
 import { Helmet } from 'react-helmet';
+import Callback from './Callback';
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 				<Route path = "/" element = {<Home/>}/>
 				<Route path = "/game" element = {<Game/>}/>
 				<Route path = "/about" element = {<About/>}/>
+				<Route path = "/callback" element = {<Callback/>}/>
 			</Routes>
 			</div>
 		</div>
