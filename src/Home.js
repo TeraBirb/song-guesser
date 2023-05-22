@@ -16,7 +16,7 @@ const Home = () => {
             <h1>Song Guesser</h1>
             <h3>A web app by Isaiah Callano for CIS 27</h3>
             <p className="intro">A song snippet will play for 5 seconds and you have to guess the song title and artist!</p>
-            {!isPending && <Link to="/login"><button onClick={ handleClick }>Get Started</button></Link>}
+            {!isPending && <Link to="/game"><button onClick={ handleClick }>Get Started</button></Link>}
         </div>
      );
 }
