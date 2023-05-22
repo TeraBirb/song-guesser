@@ -1,3 +1,6 @@
+import React from "react";
+import { useEffect } from "react";
+
 const Callback = () => {
 
 // Window, score on top, middle is song 1 out of 5, play button, can only play
@@ -7,9 +10,18 @@ const Callback = () => {
 // Play function, checks if there is no current game
 // iterate 5 times
 
+const [showElement,setShowElement] = React.useState(true)
+  useEffect( ()=>{
+    setTimeout( () => {
+      setShowElement(false)
+         }, 3000);
+       },
+   [])
+
     return (  
         <div className="callback">
-            <h1>Guess it worked</h1>
+            {showElement && <h3>Login Success!</h3>} 
+            {!showElement && <h2>Game window</h2>} 
         </div>
     );
 }

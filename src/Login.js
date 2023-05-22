@@ -30,7 +30,7 @@ const requestAccessToken = async (code) => {
     return data.access_token;
 };
 
-const Game = () => {
+const Login = () => {
     
     useEffect(() => {
         const code = getTokenFromResponse();
@@ -68,4 +68,4 @@ const Game = () => {
      );
 }
  
-export default Game;
+export default Login;
