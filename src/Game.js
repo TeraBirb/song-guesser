@@ -65,20 +65,28 @@ const Game = () => {
   // how to insert name into button value
 
   const generateChoices = (res, correct) => {
-
+    
     let randomChoices = new Array(4).fill(0);
+    const correctIndex = Math.floor(Math.random() * 4);
+    const correctArtist = correct.track.artists[0].name
+
     // random answers
     randomChoices = randomChoices.map(choice => {
-      const randomIndex = Math.floor(Math.random() * res.items.length);
-      return res.items[randomIndex].track.artists[0].name;
+      let randomIndex = Math.floor(Math.random() * res.items.length);
+      let newElement = res.items[randomIndex].track.artists[0].name;
+
+      // handle duplicates
+        while (randomChoices.includes(newElement) || newElement === correctArtist) {
+          randomIndex = Math.floor(Math.random() * res.items.length);
+          newElement = res.items[randomIndex].track.artists[0].name;
+        }
+        // if not duplicate, add to array
+        return newElement;
     })
 
     // correct answer
-    const correctIndex = Math.floor(Math.random() * 4);
-    randomChoices[correctIndex] = correct.track.artists[0].name;
+    randomChoices[correctIndex] = correctArtist;
     console.log("correct ans " + correct.track.artists[0].name);
-
-    console.log("inner array " + randomChoices);
 
     setButtonLabels(randomChoices);    
   }
@@ -112,13 +120,12 @@ const Game = () => {
                 <audio src={previewUrl} controls />
               </div>
               <div className="choices">
-                <button>A</button>
-                <button>B</button>
-                <button>C</button>
-                <button>D</button>
-                {console.log(buttonLabels)}
+                {console.log("PP " + buttonLabels)}
+                {buttonLabels.map((choice, index) =>
+                  <button key={index} onClick={e => handleGuess(e.target.value)}>
+                    {choice}</button>
+                )}
               </div>
-              <input type="text" placeholder="Your Guess" onChange={(e) => handleGuess(e.target.value)} />
             </>
           )}
         </div>
