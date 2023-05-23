@@ -122,7 +122,7 @@ const Game = () => {
               <div className="choices">
                 {console.log("PP " + buttonLabels)}
                 {buttonLabels.map((choice, index) =>
-                  <button key={index} onClick={e => handleGuess(e.target.value)}>
+                  <button key={index} value ={choice} onClick={e => handleGuess(e.target.value)}>
                     {choice}</button>
                 )}
               </div>
