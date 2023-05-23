@@ -79,7 +79,7 @@ audio::-webkit-media-controls-timeline {
 }
 
 audio::-webkit-media-controls-volume-slider {
-  background-color: #8c2942;
+  background-color: #8cb1bd;
   border-radius: 25px;
   padding-left: 8px;
   padding-right: 8px;
@@ -91,4 +91,8 @@ audio::-webkit-media-controls-volume-slider {
 
 .choices button {
   margin: 10px 30px;
+}
+
+.resultMessage {
+  font-weight: bold;
 }

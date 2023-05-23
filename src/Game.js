@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactAudioPlayer from 'react-audio-player';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 const spotifyApi = new SpotifyWebApi();
@@ -28,6 +29,8 @@ const Game = () => {
   const [previewUrl, setPreviewUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [buttonLabels, setButtonLabels] = useState([]);
+  const [isAnswered, setIsAnswered] = useState(false);
+  const [resultMessage, setResultMessage] = useState('');
 
   useEffect(() => {
     const token = getTokenFromResponse();
@@ -95,11 +98,18 @@ const Game = () => {
 
   const handleGuess = (guess) => {
     if (guess.toLowerCase() === artistName.toLowerCase()) {
-      alert('Correct guess!');
+      setResultMessage('Correct guess!');
     } else {
-      alert('Incorrect guess. Try again!');
+      setResultMessage(`Incorrect guess. The answer is ${artistName}.`);
     }
-    getRandomTrack();
+    setIsAnswered(true);
+    setTimeout(()=>{
+
+      setIsAnswered(false);
+      // Reset after 3000ms
+      getRandomTrack();
+
+    }, 2000);    
   };
 
   return (
@@ -117,11 +127,13 @@ const Game = () => {
               <h2>Guess the Artist</h2>
               <p>Track: {trackName}</p>
               <div className="player">
-                <audio src={previewUrl} controls />
+                <ReactAudioPlayer src={previewUrl} volume={0.5} autoPlay controls />
               </div>
               <div className="choices">
-                {console.log("PP " + buttonLabels)}
-                {buttonLabels.map((choice, index) =>
+                {isAnswered && <div className="resultMessage">
+                  <h3>{resultMessage}</h3>
+                </div>}
+                {!!!isAnswered && buttonLabels.map((choice, index) =>
                   <button key={index} value ={choice} onClick={e => handleGuess(e.target.value)}>
                     {choice}</button>
                 )}
