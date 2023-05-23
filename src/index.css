@@ -54,8 +54,8 @@
 }
 
 .home button:active, .game button:active {
-  border: 3px solid #8c2942;
-  padding: 7px;
+  border: 2px solid #8c2942;
+  padding: 6px;
 }
 
 body {
@@ -79,8 +79,16 @@ audio::-webkit-media-controls-timeline {
 }
 
 audio::-webkit-media-controls-volume-slider {
-  background-color: #B1D4E0;
+  background-color: #8c2942;
   border-radius: 25px;
   padding-left: 8px;
   padding-right: 8px;
+}
+
+.choices {
+  text-align: center;
+}
+
+.choices button {
+  margin: 10px 30px;
 }

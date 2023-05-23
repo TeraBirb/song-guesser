@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { resolvePath } from 'react-router-dom';
+import { createElement } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 const spotifyApi = new SpotifyWebApi();
@@ -45,21 +45,44 @@ const Game = () => {
       // Which tracks to select from
       // USA Top 50
       const response = await spotifyApi.getPlaylistTracks('37i9dQZEVXbLRQDuF5jeBp', { limit: 50 });
-      console.log(response);
       const randomIndex = Math.floor(Math.random() * response.items.length);
       const track = response.items[randomIndex];
-      // The first "in response, element track has child element also named track"
+      // in response, element track has child element also named "track"
       setTrackName(track.track.name);
       setArtistName(track.track.artists[0].name);
       setPreviewUrl(track.track.preview_url);
-      
+      generateChoices(response, track);
       setIsLoading(false);
-      
     } catch (error) {
       console.error('Error getting random track:', error);
       setIsLoading(false);
     }
   };
+
+  // getChoice() will populate the choices in buttons, one of them is correct
+    // random number gen 1-4(a-b), selected number will be correct ans,
+    // everything else will be random titles 
+  // how to insert name into button value
+
+  const generateChoices = (res, correct) => {
+    let buttonLabels = ["0","1","2","3"];
+    // random answers
+    buttonLabels = buttonLabels.map(choice => {
+      const randomIndex = Math.floor(Math.random() * res.items.length);
+      return res.items[randomIndex].track.artists[0].name;
+    })
+
+    console.log(buttonLabels);
+
+    // correct answer
+    const correctChoice = Math.floor(Math.random() * 4);
+    buttonLabels[correctChoice] = correct.track.artists[0].name;
+
+    console.log(buttonLabels);
+
+  }
+
+  // handleGuess() if button.value == artistname, you win 
 
   const handleGuess = (guess) => {
     if (guess.toLowerCase() === artistName.toLowerCase()) {
@@ -69,6 +92,11 @@ const Game = () => {
     }
     getRandomTrack();
   };
+
+  // put this in the createChoices method
+  let demo = React.createElement(
+    "button", { style: { color: "green" } }, "GeeksforGeeks"
+  )
 
   return (
     <div className='game'>
@@ -86,6 +114,13 @@ const Game = () => {
               <p>Track: {trackName}</p>
               <div className="player">
                 <audio src={previewUrl} controls />
+              </div>
+              <div className="choices">
+                {/* <button>A</button>
+                <button>B</button>
+                <button>C</button>
+                <button>D</button> */}
+                {demo}
               </div>
               <input type="text" placeholder="Your Guess" onChange={(e) => handleGuess(e.target.value)} />
             </>
