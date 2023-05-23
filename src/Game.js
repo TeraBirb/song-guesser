@@ -28,6 +28,8 @@ const Game = () => {
   const [artistName, setArtistName] = useState('');
   const [previewUrl, setPreviewUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [genre, setGenre] = useState('37i9dQZEVXbLRQDuF5jeBp');
+  const [genreName, setGenreName] = useState('Top 50 Hits');
   const [buttonLabels, setButtonLabels] = useState([]);
   const [isAnswered, setIsAnswered] = useState(false);
   const [resultMessage, setResultMessage] = useState('');
@@ -43,13 +45,32 @@ const Game = () => {
     }
   }, []);
 
+  // const handleGenreSelect = (event) => {
+  //   const value = event.target.value;
+  //   setGenreName(value);
+  //   switch(value) {
+  //     case "top50":
+  //       return setGenre('37i9dQZEVXbLRQDuF5jeBp');
+  //     case "2000s":
+  //       setGenre('37i9dQZF1EQn4jwNIohw50');
+  //     case "2010s":
+  //       setGenre('37i9dQZF1EQqedj0y9Uwvu');
+  //     case "90s":
+  //       setGenre('37i9dQZF1EQn2GRFTFMl2A');
+  //   }
+    
+  //   getRandomTrack();
+  // }
+
   const getRandomTrack = async () => {
     try {
       setIsLoading(true);
       // Which tracks to select from
       // USA Top 50
-      const response = await spotifyApi.getPlaylistTracks('37i9dQZEVXbLRQDuF5jeBp', { limit: 50 });
+      const response = await spotifyApi.getPlaylistTracks(genre, { limit: 50 });
+      console.log(genreName);
       const randomIndex = Math.floor(Math.random() * response.items.length);
+      console.log(randomIndex);
       const track = response.items[randomIndex];
       // in response, element track has child element also named "track"
       setTrackName(track.track.name);
@@ -118,6 +139,17 @@ const Game = () => {
     <div className='game'>
       <h1>Guess the Artist</h1>
 
+      {/* {loggedIn && 
+      <div className="genres">
+        <select className="genere-select" value={genreName} onChange={handleGenreSelect}>
+          <option value="top50">Top 50 Hits</option>
+          <option value="90s">90s</option>
+          <option value="2000s">2000s</option>
+          <option value="2010s">2010s</option>
+        </select>
+      </div>
+      } */}
+
       {!loggedIn ? (
         <button onClick={authorizeSpotify}>Log in with Spotify</button>
       ) : (
@@ -125,7 +157,7 @@ const Game = () => {
           {isLoading ? (
             <p>Loading...</p>
           ) : (
-            <>
+            <>              
               <h3>Score: {score}</h3>
               <p>Track: {trackName}</p>
               <div className="player">
@@ -149,10 +181,6 @@ const Game = () => {
 };
 
 export default Game;
-
-// MVP
-// add score state
-// change alert to display position absolute div
 
 // extra extras
 // GENRE selection at start: top 50, 90s, 2000s, 2010s

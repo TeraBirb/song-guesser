@@ -63,6 +63,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.genres {
+  margin-bottom: 10px;
+}
+
+.genre-select {
+  border: 0;
+  outline: 0;
+}
+
 .player {
   margin: 20px 0;
 }
