@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { resolvePath } from 'react-router-dom';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 const spotifyApi = new SpotifyWebApi();
@@ -41,13 +42,19 @@ const Game = () => {
   const getRandomTrack = async () => {
     try {
       setIsLoading(true);
-      const response = await spotifyApi.getMyTopTracks({ limit: 50 });
+      // Which tracks to select from
+      // USA Top 50
+      const response = await spotifyApi.getPlaylistTracks('37i9dQZEVXbLRQDuF5jeBp', { limit: 50 });
+      console.log(response);
       const randomIndex = Math.floor(Math.random() * response.items.length);
       const track = response.items[randomIndex];
-      setTrackName(track.name);
-      setArtistName(track.artists[0].name);
-      setPreviewUrl(track.preview_url);
+      // The first "in response, element track has child element also named track"
+      setTrackName(track.track.name);
+      setArtistName(track.track.artists[0].name);
+      setPreviewUrl(track.track.preview_url);
+      
       setIsLoading(false);
+      
     } catch (error) {
       console.error('Error getting random track:', error);
       setIsLoading(false);
@@ -64,7 +71,7 @@ const Game = () => {
   };
 
   return (
-    <div>
+    <div className='game'>
       <h1>Song Guesser</h1>
 
       {!loggedIn ? (
@@ -77,7 +84,9 @@ const Game = () => {
             <>
               <h2>Guess the Artist</h2>
               <p>Track: {trackName}</p>
-              <audio src={previewUrl} controls />
+              <div className="player">
+                <audio src={previewUrl} controls />
+              </div>
               <input type="text" placeholder="Your Guess" onChange={(e) => handleGuess(e.target.value)} />
             </>
           )}
