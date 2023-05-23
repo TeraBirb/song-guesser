@@ -31,6 +31,7 @@ const Game = () => {
   const [buttonLabels, setButtonLabels] = useState([]);
   const [isAnswered, setIsAnswered] = useState(false);
   const [resultMessage, setResultMessage] = useState('');
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const token = getTokenFromResponse();
@@ -99,6 +100,7 @@ const Game = () => {
   const handleGuess = (guess) => {
     if (guess.toLowerCase() === artistName.toLowerCase()) {
       setResultMessage('Correct guess!');
+      setScore(score + 1);
     } else {
       setResultMessage(`Incorrect guess. The answer is ${artistName}.`);
     }
@@ -114,7 +116,7 @@ const Game = () => {
 
   return (
     <div className='game'>
-      <h1>Song Guesser!</h1>
+      <h1>Guess the Artist</h1>
 
       {!loggedIn ? (
         <button onClick={authorizeSpotify}>Log in with Spotify</button>
@@ -124,7 +126,7 @@ const Game = () => {
             <p>Loading...</p>
           ) : (
             <>
-              <h2>Guess the Artist</h2>
+              <h3>Score: {score}</h3>
               <p>Track: {trackName}</p>
               <div className="player">
                 <ReactAudioPlayer src={previewUrl} volume={0.5} autoPlay controls />
