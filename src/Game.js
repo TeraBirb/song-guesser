@@ -28,6 +28,7 @@ const Game = () => {
   const [artistName, setArtistName] = useState('');
   const [previewUrl, setPreviewUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  let buttonLabels = [];
 
   useEffect(() => {
     const token = getTokenFromResponse();
@@ -52,6 +53,7 @@ const Game = () => {
       setArtistName(track.track.artists[0].name);
       setPreviewUrl(track.track.preview_url);
       generateChoices(response, track);
+      console.log("original array " + buttonLabels);
       setIsLoading(false);
     } catch (error) {
       console.error('Error getting random track:', error);
@@ -59,13 +61,14 @@ const Game = () => {
     }
   };
 
-  // getChoice() will populate the choices in buttons, one of them is correct
-    // random number gen 1-4(a-b), selected number will be correct ans,
-    // everything else will be random titles 
+  // populate the choices in buttons, one of them is correct
+  // random number gen 1-4(a-b), selected number will be correct ans,
+  // everything else will be random titles 
   // how to insert name into button value
 
   const generateChoices = (res, correct) => {
-    let buttonLabels = ["0","1","2","3"];
+
+    buttonLabels = new Array(4).fill(0);
     // random answers
     buttonLabels = buttonLabels.map(choice => {
       const randomIndex = Math.floor(Math.random() * res.items.length);
@@ -79,7 +82,7 @@ const Game = () => {
     buttonLabels[correctChoice] = correct.track.artists[0].name;
 
     console.log(buttonLabels);
-
+    console.log("correct ans " + correct.track.artists[0].name);
   }
 
   // handleGuess() if button.value == artistname, you win 
@@ -93,14 +96,9 @@ const Game = () => {
     getRandomTrack();
   };
 
-  // put this in the createChoices method
-  let demo = React.createElement(
-    "button", { style: { color: "green" } }, "GeeksforGeeks"
-  )
-
   return (
     <div className='game'>
-      <h1>Song Guesser</h1>
+      <h1>Song Guesser!</h1>
 
       {!loggedIn ? (
         <button onClick={authorizeSpotify}>Log in with Spotify</button>
@@ -116,11 +114,11 @@ const Game = () => {
                 <audio src={previewUrl} controls />
               </div>
               <div className="choices">
-                {/* <button>A</button>
+                <button>A</button>
                 <button>B</button>
                 <button>C</button>
-                <button>D</button> */}
-                {demo}
+                <button>D</button>
+                {console.log("within HTML " + buttonLabels)}
               </div>
               <input type="text" placeholder="Your Guess" onChange={(e) => handleGuess(e.target.value)} />
             </>
