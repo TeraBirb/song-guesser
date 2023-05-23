@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { createElement } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 const spotifyApi = new SpotifyWebApi();
@@ -28,7 +27,7 @@ const Game = () => {
   const [artistName, setArtistName] = useState('');
   const [previewUrl, setPreviewUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  let buttonLabels = [];
+  const [buttonLabels, setButtonLabels] = useState([]);
 
   useEffect(() => {
     const token = getTokenFromResponse();
@@ -53,7 +52,6 @@ const Game = () => {
       setArtistName(track.track.artists[0].name);
       setPreviewUrl(track.track.preview_url);
       generateChoices(response, track);
-      console.log("original array " + buttonLabels);
       setIsLoading(false);
     } catch (error) {
       console.error('Error getting random track:', error);
@@ -68,21 +66,21 @@ const Game = () => {
 
   const generateChoices = (res, correct) => {
 
-    buttonLabels = new Array(4).fill(0);
+    let randomChoices = new Array(4).fill(0);
     // random answers
-    buttonLabels = buttonLabels.map(choice => {
+    randomChoices = randomChoices.map(choice => {
       const randomIndex = Math.floor(Math.random() * res.items.length);
       return res.items[randomIndex].track.artists[0].name;
     })
 
-    console.log(buttonLabels);
-
     // correct answer
-    const correctChoice = Math.floor(Math.random() * 4);
-    buttonLabels[correctChoice] = correct.track.artists[0].name;
-
-    console.log(buttonLabels);
+    const correctIndex = Math.floor(Math.random() * 4);
+    randomChoices[correctIndex] = correct.track.artists[0].name;
     console.log("correct ans " + correct.track.artists[0].name);
+
+    console.log("inner array " + randomChoices);
+
+    setButtonLabels(randomChoices);    
   }
 
   // handleGuess() if button.value == artistname, you win 
@@ -118,7 +116,7 @@ const Game = () => {
                 <button>B</button>
                 <button>C</button>
                 <button>D</button>
-                {console.log("within HTML " + buttonLabels)}
+                {console.log(buttonLabels)}
               </div>
               <input type="text" placeholder="Your Guess" onChange={(e) => handleGuess(e.target.value)} />
             </>
