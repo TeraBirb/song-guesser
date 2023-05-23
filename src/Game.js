@@ -135,3 +135,11 @@ const Game = () => {
 };
 
 export default Game;
+
+// MVP
+// add score state
+// change alert to display position absolute div
+
+// extra extras
+// GENRE selection at start: top 50, 90s, 2000s, 2010s
+// change genre button
