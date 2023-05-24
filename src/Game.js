@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import ReactAudioPlayer from 'react-audio-player';
 import SpotifyWebApi from 'spotify-web-api-js';
 
@@ -68,9 +69,8 @@ const Game = () => {
       // Which tracks to select from
       // USA Top 50
       const response = await spotifyApi.getPlaylistTracks(genre, { limit: 50 });
-      console.log(genreName);
+      // console.log(response);
       const randomIndex = Math.floor(Math.random() * response.items.length);
-      console.log(randomIndex);
       const track = response.items[randomIndex];
       // in response, element track has child element also named "track"
       setTrackName(track.track.name);
@@ -129,7 +129,7 @@ const Game = () => {
     setTimeout(()=>{
 
       setIsAnswered(false);
-      // Reset after 3000ms
+      // Reset after 2000ms
       getRandomTrack();
 
     }, 2000);    
@@ -137,8 +137,6 @@ const Game = () => {
 
   return (
     <div className='game'>
-      <h1>Guess the Artist</h1>
-
       {/* {loggedIn && 
       <div className="genres">
         <select className="genere-select" value={genreName} onChange={handleGenreSelect}>
@@ -151,13 +149,18 @@ const Game = () => {
       } */}
 
       {!loggedIn ? (
+        <>
+        <h1>Before we start...</h1>
+        <p>Song Guesser uses the <Link to="https://developer.spotify.com/documentation/web-api">Spotify API</Link> which requires users to log in with a Spotify account on their secure authentication page. Don't worry, you don't need a Premium account. Free accounts work the exact same for this app. And if you don't have an account already, registering is quick and easy!</p>
         <button onClick={authorizeSpotify}>Log in with Spotify</button>
+        </>
       ) : (
         <div>
           {isLoading ? (
             <p>Loading...</p>
           ) : (
-            <>              
+            <>
+              <h1>Guess the Artist</h1>              
               <h3>Score: {score}</h3>
               <p>Track: {trackName}</p>
               <div className="player">
