@@ -5,9 +5,9 @@ import SpotifyWebApi from 'spotify-web-api-js';
 
 const spotifyApi = new SpotifyWebApi();
 
-const CLIENT_ID = '8cb420509fdf40219cdbdbc9ea852644';
-const REDIRECT_URI = 'http://localhost:3000/game';
-const SCOPES = 'user-read-private user-read-email user-top-read'; // Add desired scopes
+const CLIENT_ID = 'YOUR CLIENT ID HERE';  // developer.spotify.com
+const REDIRECT_URI = 'YOUR REDIRECT URI HERE'; // developer.spotify.com
+const SCOPES = 'user-read-private user-read-email user-top-read';
 
 const getTokenFromResponse = () => {
   const urlParams = new URLSearchParams(window.location.hash.substring(1));
@@ -29,7 +29,7 @@ const Game = () => {
   const [artistName, setArtistName] = useState('');
   const [previewUrl, setPreviewUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [genre, setGenre] = useState('37i9dQZEVXbLRQDuF5jeBp');
+  const [genre, setGenre] = useState('0mmB5SEZeyAiRrTY54jLil');
   const [genreName, setGenreName] = useState('Top 50 Hits');
   const [buttonLabels, setButtonLabels] = useState([]);
   const [isAnswered, setIsAnswered] = useState(false);
