@@ -5,9 +5,9 @@ import SpotifyWebApi from "spotify-web-api-js";
 
 const spotifyApi = new SpotifyWebApi();
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;  // developer.spotify.com
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID; // developer.spotify.com
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI; // developer.spotify.com
-const SCOPES = 'user-read-private user-read-email user-top-read';
+const SCOPES = "user-read-private user-read-email user-top-read";
 
 const getTokenFromResponse = () => {
     const urlParams = new URLSearchParams(window.location.hash.substring(1));
@@ -37,6 +37,7 @@ const Game = () => {
     const [isAnswered, setIsAnswered] = useState(false);
     const [resultMessage, setResultMessage] = useState("");
     const [score, setScore] = useState(0);
+    const [answeredSongs, setAnsweredSongs] = useState([]);
 
     useEffect(() => {
         const token = getTokenFromResponse();
@@ -68,16 +69,23 @@ const Game = () => {
     const getRandomTrack = async () => {
         try {
             setIsLoading(true);
+            // console.log(answeredSongs);
             // Which tracks to select from
             // USA Top 50
             const response = await spotifyApi.getPlaylistTracks(genre, {
                 limit: 50,
             });
             // console.log(response);
-            const randomIndex = Math.floor(
-                Math.random() * response.items.length
-            );
-            const track = response.items[randomIndex];
+
+            // Randomly select a track
+            let randomIndex;
+            let track;
+            do {
+                randomIndex = Math.floor(
+                    Math.random() * response.items.length
+                );
+                track = response.items[randomIndex];
+            } while (answeredSongs.includes(track.track.name));
             // in response, element track has child element also named "track"
             setTrackName(track.track.name);
             setArtistName(track.track.artists[0].name);
@@ -119,16 +127,21 @@ const Game = () => {
         // });
 
         // v2 Random Answers
-        randomChoices.forEach( (choice, index, array) => {
-            if  (choice === "") {
+        randomChoices.forEach((choice, index, array) => {
+            if (choice === "") {
                 let newElement;
                 do {
-                    const randomIndex = Math.floor(Math.random() * res.items.length);
+                    const randomIndex = Math.floor(
+                        Math.random() * res.items.length
+                    );
                     newElement = res.items[randomIndex].track.artists[0].name;
-                } while (randomChoices.includes(newElement) || newElement === correctArtist);
+                } while (
+                    randomChoices.includes(newElement) ||
+                    newElement === correctArtist
+                );
                 array[index] = newElement;
             }
-        })
+        });
 
         // console.log("correct ans " + correct.track.artists[0].name);
 
@@ -144,6 +157,8 @@ const Game = () => {
         } else {
             setResultMessage(`Incorrect guess. The answer is ${artistName}.`);
         }
+        const guessedTrack = trackName;
+        setAnsweredSongs([...answeredSongs, guessedTrack]);
         setIsAnswered(true);
         setTimeout(() => {
             setIsAnswered(false);
