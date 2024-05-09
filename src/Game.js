@@ -5,9 +5,9 @@ import SpotifyWebApi from "spotify-web-api-js";
 
 const spotifyApi = new SpotifyWebApi();
 
-const CLIENT_ID = "8cb420509fdf40219cdbdbc9ea852644";
-const REDIRECT_URI = "http://localhost:3000/game";
-const SCOPES = "user-read-private user-read-email user-top-read";
+const CLIENT_ID = 'YOUR CLIENT ID HERE';  // developer.spotify.com
+const REDIRECT_URI = 'YOUR REDIRECT URI HERE'; // developer.spotify.com
+const SCOPES = 'user-read-private user-read-email user-top-read';
 
 const getTokenFromResponse = () => {
     const urlParams = new URLSearchParams(window.location.hash.substring(1));
