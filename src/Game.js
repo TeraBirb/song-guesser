@@ -32,7 +32,7 @@ const Game = () => {
     const [previewUrl, setPreviewUrl] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [genre, setGenre] = useState(TOP_50_HITS);
-    const [genreName, setGenreName] = useState("Top 50 Hits");
+    // const [genreName, setGenreName] = useState("Top 50 Hits");
     const [buttonLabels, setButtonLabels] = useState([]);
     const [isAnswered, setIsAnswered] = useState(false);
     const [resultMessage, setResultMessage] = useState("");
@@ -152,7 +152,7 @@ const Game = () => {
 
     const handleGuess = (guess) => {
         if (guess.toLowerCase() === artistName.toLowerCase()) {
-            setResultMessage("Correct guess!");
+            setResultMessage("Correct guess! \u{1F389}");
             setScore(score + 1);
         } else {
             setResultMessage(`Incorrect guess. The answer is ${artistName}.`);
@@ -185,7 +185,7 @@ const Game = () => {
                     <h1>Before we start...</h1>
                     <p>
                         Song Guesser uses the{" "}
-                        <Link to="https://developer.spotify.com/documentation/web-api">
+                        <Link to="https://developer.spotify.com/documentation/web-api" target="_blank" className="spotify-dev-link">
                             Spotify API
                         </Link>{" "}
                         which requires users to log in with a Spotify account on

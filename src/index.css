@@ -63,6 +63,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.spotify-dev-link {
+  color: #da4167;
+  font-weight: bold;
+}
+
 .genres {
   margin-bottom: 10px;
 }
