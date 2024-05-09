@@ -5,8 +5,8 @@ import SpotifyWebApi from "spotify-web-api-js";
 
 const spotifyApi = new SpotifyWebApi();
 
-const CLIENT_ID = 'YOUR CLIENT ID HERE';  // developer.spotify.com
-const REDIRECT_URI = 'YOUR REDIRECT URI HERE'; // developer.spotify.com
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;  // developer.spotify.com
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI; // developer.spotify.com
 const SCOPES = 'user-read-private user-read-email user-top-read';
 
 const getTokenFromResponse = () => {
@@ -23,13 +23,15 @@ const authorizeSpotify = () => {
     window.location.href = authorizeUrl;
 };
 
+const TOP_50_HITS = "37i9dQZEVXbLRQDuF5jeBp";
+
 const Game = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [trackName, setTrackName] = useState("");
     const [artistName, setArtistName] = useState("");
     const [previewUrl, setPreviewUrl] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [genre, setGenre] = useState("37i9dQZEVXbLRQDuF5jeBp");
+    const [genre, setGenre] = useState(TOP_50_HITS);
     const [genreName, setGenreName] = useState("Top 50 Hits");
     const [buttonLabels, setButtonLabels] = useState([]);
     const [isAnswered, setIsAnswered] = useState(false);
